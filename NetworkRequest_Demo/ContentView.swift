@@ -34,8 +34,22 @@ struct ContentView: View {
             do {
               let (data, response) = try await URLSession.shared.data(for: request)
                 
-                print(data)
-                print(response)
+                // Pharse the Json
+                let decoder = JSONDecoder()
+                
+                
+                do {
+                  let searchResponse =  try decoder.decode(SearchResponse.self, from: data)
+                    
+                    for photo in searchResponse.photos {
+                        print(photo)
+                    }
+                }
+                catch {
+                   print(error)
+                }
+                
+                
                 
             }
             catch {
